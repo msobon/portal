@@ -28,7 +28,8 @@ public class Users extends Controller {
     }
 
     public static Result deleteUser(Long id){
-        return TODO;
+        User.delete(id);
+        return redirect(routes.Users.users());
     }
 
     public static Result createUser(){

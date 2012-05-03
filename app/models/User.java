@@ -35,7 +35,9 @@ public class User extends Model {
     // -- Queries
     
     public static Finder<String,User> find = new Finder(String.class, User.class);
-    
+
+    public static Finder<Long, User> findById = new Finder(Long.class, User.class);
+
     /**
      * Retrieve all users.
      */
@@ -49,7 +51,7 @@ public class User extends Model {
     public static User findByEmail(String email) {
         return find.where().eq("email", email).findUnique();
     }
-    
+
     /**
      * Authenticate a User.
      */
@@ -63,6 +65,10 @@ public class User extends Model {
     public static void create(User user){
          user.userApps = new LinkedList<App>();
          user.save();
+    }
+
+    public static void delete(Long id){
+        findById.ref(id).delete();
     }
     
     // --
