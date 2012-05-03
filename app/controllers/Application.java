@@ -10,8 +10,23 @@ import views.html.*;
 
 public class Application extends Controller {
   
-  public static Result index() {
-      return redirect(routes.Apps.apps());
+  public static Result admin() {
+
+
+          response().setContentType("text/html");
+          return ok("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\n" +
+                  "        \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
+                  "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\">"+
+                  "<html>\n" +
+                  "<head>\n" +
+                  "    <title>Panel administratora</title>\n" +
+                  "</head>\n" +
+                  "<body>\n" +
+                  "<a href=\"/apps\">Aplikacje</a><br>\n" +
+                  "<a href=\"/users\">Użytkownicy</a>\n" +
+                  "</body>\n" +
+                  "</html>\n");
+
   }
 
     // -- Authentication

@@ -7,6 +7,7 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -28,6 +29,8 @@ public class User extends Model {
     
     @Constraints.Required
     public String password;
+
+    public List<App> userApps;
     
     // -- Queries
     
@@ -58,6 +61,7 @@ public class User extends Model {
     }
 
     public static void create(User user){
+         user.userApps = new LinkedList<App>();
          user.save();
     }
     
