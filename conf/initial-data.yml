@@ -21,3 +21,16 @@ users:
         email:      erwan@sample.com
         name:       Erwan Loisant
         password:   secret
+
+# Apps
+apps:
+
+    - !!models.App
+        name:       Magazyn
+        uri:   www.example.com/magazyn
+
+    - !!models.App
+            name:       Pracownicy
+            uri:   www.example.com/pracownicy
+
+

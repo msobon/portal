@@ -23,6 +23,9 @@ public class Global extends GlobalSettings {
                 // Insert users first
                 Ebean.save(all.get("users"));
 
+                // Insert tapps
+                Ebean.save(all.get("apps"));
+
 //                // Insert projects
 //                Ebean.save(all.get("projects"));
 //                for(Object project: all.get("projects")) {
@@ -30,8 +33,7 @@ public class Global extends GlobalSettings {
 //                    Ebean.saveManyToManyAssociations(project, "members");
 //                }
 //
-//                // Insert tasks
-//                Ebean.save(all.get("tasks"));
+//
 
             }
         }
