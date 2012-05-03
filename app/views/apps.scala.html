@@ -1,0 +1,34 @@
+@(apps: List[App], appForm: Form[App])
+
+@import helper._
+
+@main("Applications") {
+
+<h1>@apps.size() app(s)</h1>
+
+<ul>
+    @for(app <- apps) {
+    <li>
+        @app.id <br>
+        @app.name <br>
+        @app.uri
+
+        @form(routes.Apps.deleteApp(app.id)) {
+        <input type="submit" value="Delete">
+        }
+    </li>
+    }
+</ul>
+
+<h2>Add a new app</h2>
+
+@form(routes.Apps.createApp()) {
+
+@inputText(appForm("name"))
+@inputText(appForm("uri"))
+
+<input type="submit" value="Create">
+
+}
+
+}
