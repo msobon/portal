@@ -19,7 +19,7 @@ public class Application extends Controller {
                   "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\">"+
                   "<html>\n" +
                   "<head>\n" +
-                  "    <title>Panel administratora</title>\n" +
+                  "    <title>Saas Portal</title>\n" +
                   "</head>\n" +
                   "<body>\n" +
                   "<a href=\"/apps\">Aplikacje</a><br>\n" +

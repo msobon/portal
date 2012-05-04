@@ -11,13 +11,6 @@ import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Michal
- * Date: 03.05.12
- * Time: 12:44
- * To change this template use File | Settings | File Templates.
- */
 
 @Entity
 @Table(name="app")

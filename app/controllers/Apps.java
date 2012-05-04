@@ -8,13 +8,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Michal
- * Date: 03.05.12
- * Time: 12:59
- * To change this template use File | Settings | File Templates.
- */
+
 @Security.Authenticated(Secured.class)
 public class Apps extends Controller {
 
