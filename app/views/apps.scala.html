@@ -1,8 +1,8 @@
-@(apps: List[App], appForm: Form[App])
+@(apps: List[App], appForm: Form[App], user: User)
 
 @import helper._
 
-@main("Applications") {
+@main("Applications", user) {
 
 <h1>@apps.size() app(s)</h1>
 

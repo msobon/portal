@@ -5,8 +5,9 @@ import models.App;
 import models.User;
 import play.data.Form;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
-
+import play.mvc.Security;
 
 
 /**
@@ -16,6 +17,7 @@ import play.mvc.Result;
  * Time: 14:46
  * To change this template use File | Settings | File Templates.
  */
+@Security.Authenticated(Secured.class)
 public class Users extends Controller {
 
 
@@ -23,7 +25,7 @@ public class Users extends Controller {
 
     public static Result users() {
        return ok(
-               views.html.users.render(User.all(), userForm)
+               views.html.users.render(User.all(), userForm, User.findByEmail(Http.Context.current().request().username()))
        );
     }
 
@@ -36,7 +38,7 @@ public class Users extends Controller {
         Form<User> filledForm = userForm.bindFromRequest();
         if(filledForm.hasErrors()) {
             return badRequest(
-                    views.html.users.render(User.all(), filledForm)
+                    views.html.users.render(User.all(), filledForm, User.findByEmail(Http.Context.current().request().username()))
             );
         } else {
             User.create(filledForm.get());
