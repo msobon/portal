@@ -3,7 +3,13 @@
 # ~~~~
 
 # Home page
-GET   /                             controllers.Application.admin()
+GET   /                             controllers.Application.login()
+GET /admin                          controllers.Application.admin()
+
+# Authentication
+GET     /login                              controllers.Application.login()
+POST    /login                              controllers.Application.authenticate()
+GET     /logout                             controllers.Application.logout()
 
 # Apps
 GET   /apps                         controllers.Apps.apps()

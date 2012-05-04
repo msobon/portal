@@ -6,6 +6,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,9 @@ public class App extends Model {
 
     @Constraints.Required
     public String name;
+
+    @ManyToMany
+    public List<User> users = new ArrayList<User>();
 
     public static Finder<Long,App> find = new Finder(
             Long.class, App.class
