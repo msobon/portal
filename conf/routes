@@ -20,6 +20,7 @@ POST  /apps/:id/delete              controllers.Apps.deleteApp(id: Long)
 GET   /users                        controllers.Users.users()
 POST  /users                        controllers.Users.createUser()
 POST  /users/:id/delete             controllers.Users.deleteUser(id: Long)
+POST  /users/:idUser/:idApp/request             controllers.Users.requestApp(idUser: String, idApp: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET   /assets/*file                 controllers.Assets.at(path="/public", file)

@@ -6,7 +6,9 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,6 +31,12 @@ public class User extends Model {
     
     @Constraints.Required
     public String password;
+
+    @ManyToMany
+    public List<App> requestedApps = new ArrayList<App>();
+
+    @ManyToMany
+    public List<App> userApps = new ArrayList<App>();
 
     
     // -- Queries

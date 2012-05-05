@@ -22,6 +22,15 @@ public class Users extends Controller {
        );
     }
 
+    public static Result requestApp(String userId, Long appId){
+        User user = User.findByEmail(userId);
+        App requestedApp = App.find.ref(appId);
+        if(!user.requestedApps.contains(requestedApp)){
+            user.requestedApps.add(requestedApp);
+        }
+        return redirect(routes.Apps.apps());
+    }
+
     public static Result deleteUser(Long id){
         User.delete(id);
         return redirect(routes.Users.users());

@@ -26,8 +26,6 @@ public class App extends Model {
     @Constraints.Required
     public String name;
 
-    @ManyToMany
-    public List<User> users = new ArrayList<User>();
 
     public static Finder<Long,App> find = new Finder(
             Long.class, App.class

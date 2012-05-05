@@ -12,9 +12,11 @@
         @app.id <br>
         @app.name <br>
         @app.uri
-
+        @form(routes.Users.requestApp(user.email,app.id)){
+            <input type="submit" value="Request">
+        }
         @form(routes.Apps.deleteApp(app.id)) {
-        <input type="submit" value="Delete">
+            <input type="submit" value="Delete">
         }
     </li>
     }
