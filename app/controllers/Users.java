@@ -3,6 +3,7 @@ package controllers;
 
 import models.App;
 import models.User;
+import play.api.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -22,11 +23,19 @@ public class Users extends Controller {
        );
     }
 
+//    public static Result userDetails(String email){
+//
+//    }
+
     public static Result requestApp(String userId, Long appId){
         User user = User.findByEmail(userId);
         App requestedApp = App.find.ref(appId);
         if(!user.requestedApps.contains(requestedApp)){
             user.requestedApps.add(requestedApp);
+            //TODO refactor to model
+            user.saveManyToManyAssociations("requestedApps");
+            //TODO add logger
+            System.out.println("request added");
         }
         return redirect(routes.Apps.apps());
     }

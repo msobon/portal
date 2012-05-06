@@ -1,0 +1,26 @@
+@(users: List[User], user: User)
+
+@import helper._
+
+@main("Provisioning", user) {
+
+
+<ul>
+    @for(user <- users) {
+    <li>
+        @user.name @user.email <br>
+        @user.requestedApps.size()
+        @for(app <- user.requestedApps) {
+            <li>
+            @app.name
+            </li>
+
+        @form(routes.Provisioning.approveApp(user.email, app.id)) {
+        <input type="submit" value="Approve">
+        }
+    }
+    </li>
+    }
+</ul>
+
+}

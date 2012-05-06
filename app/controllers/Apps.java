@@ -15,7 +15,6 @@ public class Apps extends Controller {
     static Form<App> appForm = form(App.class);
 
     public static Result apps() {
-        Http.Context.current.get().request().username();
         return ok(
                 views.html.apps.render(App.all(), appForm, User.findByEmail(Http.Context.current().request().username()) )
         );
