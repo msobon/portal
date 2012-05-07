@@ -23,9 +23,11 @@ public class Users extends Controller {
        );
     }
 
-//    public static Result userDetails(String email){
-//
-//    }
+    public static Result userDetails(String email){
+        User user = User.findByEmail(email);
+
+        return ok(views.html.userDetails.render(user));
+    }
 
     public static Result requestApp(String userId, Long appId){
         User user = User.findByEmail(userId);

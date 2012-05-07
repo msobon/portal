@@ -1,0 +1,19 @@
+@(user: User)
+
+@import helper._
+
+@main("Users", user) {
+
+@user.name<br>
+@user.email<br>
+@user.userApps.size()
+<ul>
+    @for(app <- user.userApps) {
+    <li>
+        @app.name <br>
+        }
+    </li>
+
+</ul>
+
+}
