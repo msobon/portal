@@ -22,8 +22,9 @@ public class Application extends Controller {
                   "    <title>Saas Portal</title>\n" +
                   "</head>\n" +
                   "<body>\n" +
-                  "<a href=\"/apps\">Aplikacje</a><br>\n" +
-                  "<a href=\"/users\">Użytkownicy</a>\n" +
+                  "<a href=\"/apps\">Apps</a><br>\n" +
+                  "<a href=\"/users\">Users</a><br>\n" +
+                  "<a href=\"/provisioning\">Provisioning</a>\n" +
                   "</body>\n" +
                   "</html>\n");
 

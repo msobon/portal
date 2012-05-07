@@ -25,6 +25,7 @@ public class Provisioning extends Controller {
 
 
         if (!user.userApps.contains(requestedApp)) {
+            //TODO ie dziala podwojny update relacji many to many
             user.userApps.add(requestedApp);
             user.saveManyToManyAssociations("requestedApps");
         }
