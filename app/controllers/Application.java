@@ -68,9 +68,11 @@ public class Application extends Controller {
                 return redirect(
                         routes.Application.admin()
                 );
-            else {
-                return TODO;
-            }
+            else
+                return redirect(
+                        routes.MyApps.myApps()
+                );
+
         }
     }
 

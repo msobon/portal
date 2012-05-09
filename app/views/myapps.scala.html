@@ -1,0 +1,15 @@
+@(myApps: List[App],  user: User)
+
+@import helper._
+
+@main("My applications", user) {
+
+<ul>
+    @for(app <- myApps) {
+    <li>
+        <a href="@app.uri">@app.name</a>
+    </li>
+    }
+</ul>
+
+}
