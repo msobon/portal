@@ -32,13 +32,14 @@ public class Users extends Controller {
     public static Result requestApp(String userId, Long appId){
         User user = User.findByEmail(userId);
         App requestedApp = App.find.ref(appId);
-        if(!user.requestedApps.contains(requestedApp)){
+        if(!user.requestedApps.contains(requestedApp) && !user.userApps.contains(requestedApp)){
             user.requestedApps.add(requestedApp);
             //TODO refactor to model
             user.saveManyToManyAssociations("requestedApps");
             //TODO add logger
             System.out.println("request added");
         }
+        user.save();
         return redirect(routes.Apps.apps());
     }
 

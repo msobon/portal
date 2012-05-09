@@ -19,10 +19,16 @@ create table account (
 ;
 
 
-create table account_app (
-  account_id                     bigint not null,
-  app_id                         bigint not null,
-  constraint pk_account_app primary key (account_id, app_id))
+create table user_requestedApps (
+  email                          bigint not null,
+  id                             bigint not null,
+  constraint pk_user_requestedApps primary key (email, id))
+;
+
+create table user_userApps (
+  email                          bigint not null,
+  id                             bigint not null,
+  constraint pk_user_userApps primary key (email, id))
 ;
 create sequence app_seq;
 
@@ -31,9 +37,13 @@ create sequence account_seq;
 
 
 
-alter table account_app add constraint fk_account_app_account_01 foreign key (account_id) references account (id) on delete restrict on update restrict;
+alter table user_requestedApps add constraint fk_user_requestedApps_account_01 foreign key (email) references account (id) on delete restrict on update restrict;
 
-alter table account_app add constraint fk_account_app_app_02 foreign key (app_id) references app (id) on delete restrict on update restrict;
+alter table user_requestedApps add constraint fk_user_requestedApps_app_02 foreign key (id) references app (id) on delete restrict on update restrict;
+
+alter table user_userApps add constraint fk_user_userApps_account_01 foreign key (email) references account (id) on delete restrict on update restrict;
+
+alter table user_userApps add constraint fk_user_userApps_app_02 foreign key (id) references app (id) on delete restrict on update restrict;
 
 # --- !Downs
 
@@ -43,7 +53,9 @@ drop table if exists app;
 
 drop table if exists account;
 
-drop table if exists account_app;
+drop table if exists user_requestedApps;
+
+drop table if exists user_userApps;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 

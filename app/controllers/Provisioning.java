@@ -17,19 +17,9 @@ public class Provisioning extends Controller {
         );
     }
 
-    public static Result approveApp(String userId, Long appId) {
+    public static Result approveApp(String email, Long appId) {
         //TODO spr czy admin
-        User user = User.findByEmail(userId);
-        App requestedApp = App.find.ref(appId);
-        user.requestedApps.remove(requestedApp);
-
-
-        if (!user.userApps.contains(requestedApp)) {
-            //TODO ie dziala podwojny update relacji many to many
-            user.userApps.add(requestedApp);
-            user.saveManyToManyAssociations("requestedApps");
-        }
-        Ebean.saveManyToManyAssociations(user,"userApps");
+        User.approveRequestedApp(email, appId);
         return redirect(routes.Provisioning.provisioning());
     }
 

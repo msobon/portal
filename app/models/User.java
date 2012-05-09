@@ -1,13 +1,13 @@
 package models;
 
+import com.avaje.ebean.Ebean;
+import controllers.routes;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
+import play.db.jpa.Transactional;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,10 +32,14 @@ public class User extends Model {
     @Constraints.Required
     public String password;
 
-    @ManyToMany
+    @ManyToMany(cascade= CascadeType.ALL)
+    @JoinTable(name = "user_requestedApps", joinColumns = @JoinColumn(name = "email"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
     public List<App> requestedApps = new ArrayList<App>();
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name = "user_userApps", joinColumns = @JoinColumn(name = "email"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
     public List<App> userApps = new ArrayList<App>();
 
     
@@ -75,6 +79,20 @@ public class User extends Model {
 
     public static void delete(Long id){
         findById.ref(id).delete();
+    }
+
+    @Transactional
+    public static void approveRequestedApp(String email, Long appId){
+        User user = User.findByEmail(email);
+        App requestedApp = App.find.ref(appId);
+        user.requestedApps.remove(requestedApp);
+
+        user.saveManyToManyAssociations("requestedApps");
+        if (!user.userApps.contains(requestedApp)) {
+            user.userApps.add(requestedApp);
+            Ebean.saveManyToManyAssociations(user, "userApps");
+        }
+
     }
     
     // --

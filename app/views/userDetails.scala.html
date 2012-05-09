@@ -6,7 +6,8 @@
 
 @user.name<br>
 @user.email<br>
-@user.userApps.size()
+user apps @user.userApps.size()<br>
+requested apps @user.requestedApps.size()
 <ul>
     @for(app <- user.userApps) {
     <li>
