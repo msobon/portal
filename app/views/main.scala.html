@@ -15,7 +15,6 @@
 </head>
 <body>
 <header>
-    <a href="@routes.Application.admin" id="logo"><span>Admin panel</span></a>
     <dl id="user">
         <dt>@user.name <span>(@user.email)</span></dt>
         <dd>
@@ -23,6 +22,17 @@
         </dd>
     </dl>
 </header>
+
+<section id ="menu">
+    <a href="@routes.MyApps.myApps" ><span>My Apps</span></a>
+    <a href="@routes.Apps.apps" ><span>Apps</span></a>
+    @if(user.isAdmin) {
+        <a href="@routes.Users.users" ><span>Users</span></a>
+    }
+    @if(user.isAdmin) {
+        <a href="@routes.Provisioning.provisioning" ><span>Provisioning</span></a>
+    }
+</section>
 
 <section id="main">
     @content

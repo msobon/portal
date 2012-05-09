@@ -28,7 +28,7 @@ public class Users extends Controller {
         User performer = User.findByEmail(Http.Context.current().request().username());
         if (performer.isAdmin) {
             User user = User.findByEmail(email);
-            return ok(views.html.userDetails.render(user));
+            return ok(views.html.userDetails.render(performer, user));
         } else return Results.forbidden();
     }
 

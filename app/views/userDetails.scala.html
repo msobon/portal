@@ -1,16 +1,25 @@
-@(user: User)
+@(performer: User, user: User)
 
 @import helper._
 
-@main("Users", user) {
+@main("User details", performer) {
 
 @user.name<br>
 @user.email<br>
 Used credits @user.usedCredits<br>
 user apps @user.userApps.size()<br>
-requested apps @user.requestedApps.size()
 <ul>
     @for(app <- user.userApps) {
+    <li>
+        @app.name <br>
+        }
+    </li>
+
+</ul>
+
+requested apps @user.requestedApps.size()
+<ul>
+    @for(app <- user.requestedApps) {
     <li>
         @app.name <br>
         }

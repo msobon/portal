@@ -10,26 +10,6 @@ import views.html.*;
 
 public class Application extends Controller {
 
-    public static Result admin() {
-
-
-        response().setContentType("text/html");
-        return ok("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\n" +
-                "        \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
-                "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\">" +
-                "<html>\n" +
-                "<head>\n" +
-                "    <title>Saas Portal</title>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "<a href=\"/apps\">Apps</a><br>\n" +
-                "<a href=\"/users\">Users</a><br>\n" +
-                "<a href=\"/provisioning\">Provisioning</a>\n" +
-                "</body>\n" +
-                "</html>\n");
-
-    }
-
     // -- Authentication
 
     public static class Login {
@@ -64,14 +44,9 @@ public class Application extends Controller {
             return badRequest(login.render(loginForm));
         } else {
             session("email", loginForm.get().email);
-            if (User.findByEmail(loginForm.get().email).isAdmin)
-                return redirect(
-                        routes.Application.admin()
-                );
-            else
-                return redirect(
-                        routes.MyApps.myApps()
-                );
+            return redirect(
+                    routes.MyApps.myApps()
+            );
 
         }
     }
