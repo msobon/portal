@@ -32,6 +32,8 @@ public class User extends Model {
     @Constraints.Required
     public String password;
 
+    public Long usedCredits = 0l;
+
     @ManyToMany(cascade= CascadeType.ALL)
     @JoinTable(name = "user_requestedApps", joinColumns = @JoinColumn(name = "email"),
             inverseJoinColumns = @JoinColumn(name = "id"))
