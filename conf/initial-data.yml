@@ -22,6 +22,12 @@ users:
         name:       Erwan Loisant
         password:   secret
 
+    - !!models.User
+        email:      admin@sample.com
+        name:       Jack Admin
+        password:   secret
+        isAdmin:    true
+
 # Apps
 apps:
 

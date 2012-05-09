@@ -34,6 +34,8 @@ public class User extends Model {
 
     public Long usedCredits = 0l;
 
+    public boolean isAdmin = false;
+
     @ManyToMany(cascade= CascadeType.ALL)
     @JoinTable(name = "user_requestedApps", joinColumns = @JoinColumn(name = "email"),
             inverseJoinColumns = @JoinColumn(name = "id"))

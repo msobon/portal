@@ -15,6 +15,8 @@ create table account (
   email                     varchar(255),
   name                      varchar(255),
   password                  varchar(255),
+  used_credits              bigint,
+  is_admin                  boolean,
   constraint pk_account primary key (id))
 ;
 

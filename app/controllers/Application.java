@@ -9,26 +9,26 @@ import views.html.*;
 
 
 public class Application extends Controller {
-  
-  public static Result admin() {
+
+    public static Result admin() {
 
 
-          response().setContentType("text/html");
-          return ok("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\n" +
-                  "        \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
-                  "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\">"+
-                  "<html>\n" +
-                  "<head>\n" +
-                  "    <title>Saas Portal</title>\n" +
-                  "</head>\n" +
-                  "<body>\n" +
-                  "<a href=\"/apps\">Apps</a><br>\n" +
-                  "<a href=\"/users\">Users</a><br>\n" +
-                  "<a href=\"/provisioning\">Provisioning</a>\n" +
-                  "</body>\n" +
-                  "</html>\n");
+        response().setContentType("text/html");
+        return ok("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\n" +
+                "        \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
+                "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\">" +
+                "<html>\n" +
+                "<head>\n" +
+                "    <title>Saas Portal</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<a href=\"/apps\">Apps</a><br>\n" +
+                "<a href=\"/users\">Users</a><br>\n" +
+                "<a href=\"/provisioning\">Provisioning</a>\n" +
+                "</body>\n" +
+                "</html>\n");
 
-  }
+    }
 
     // -- Authentication
 
@@ -38,7 +38,7 @@ public class Application extends Controller {
         public String password;
 
         public String validate() {
-            if(User.authenticate(email, password) == null) {
+            if (User.authenticate(email, password) == null) {
                 return "Invalid user or password";
             }
             return null;
@@ -60,13 +60,17 @@ public class Application extends Controller {
      */
     public static Result authenticate() {
         Form<Login> loginForm = form(Login.class).bindFromRequest();
-        if(loginForm.hasErrors()) {
+        if (loginForm.hasErrors()) {
             return badRequest(login.render(loginForm));
         } else {
             session("email", loginForm.get().email);
-            return redirect(
-                    routes.Application.admin()
-            );
+            if (User.findByEmail(loginForm.get().email).isAdmin)
+                return redirect(
+                        routes.Application.admin()
+                );
+            else {
+                return TODO;
+            }
         }
     }
 
@@ -80,5 +84,5 @@ public class Application extends Controller {
                 routes.Application.login()
         );
     }
-  
+
 }
