@@ -55,6 +55,18 @@ public class Users extends Controller {
             return Results.forbidden();
     }
 
+    public static Result register() {
+        Form<User> filledForm = userForm.bindFromRequest();
+        if (filledForm.hasErrors()) {
+            return badRequest(
+                    views.html.addUser.render(filledForm)
+            );
+        } else {
+            User.create(filledForm.get());
+            return redirect(routes.Users.users());
+        }
+    }
+
     public static Result createUser() {
         Form<User> filledForm = userForm.bindFromRequest();
         if (filledForm.hasErrors()) {
