@@ -10,6 +10,8 @@ import views.html.*;
 
 public class Application extends Controller {
 
+    static Form<User> userForm = form(User.class);
+
     // -- Authentication
 
     public static class Login {
@@ -62,4 +64,16 @@ public class Application extends Controller {
         );
     }
 
+    public static Result register() {
+        //TODO validation
+        Form<User> filledForm = userForm.bindFromRequest();
+        if (filledForm.hasErrors()) {
+            return badRequest(
+                    views.html.register.render(filledForm)
+            );
+        } else {
+            User.create(filledForm.get());
+            return redirect(routes.Application.login());
+        }
+    }
 }
