@@ -15,8 +15,8 @@ import java.util.List;
 /**
  * User entity managed by Ebean
  */
-@Entity 
-@Table(name="account")
+@Entity
+@Table(name = "account")
 public class User extends Model {
 
     @Id
@@ -25,10 +25,10 @@ public class User extends Model {
     @Constraints.Required
     @Formats.NonEmpty
     public String email;
-    
+
     @Constraints.Required
     public String name;
-    
+
     @Constraints.Required
     public String password;
 
@@ -36,20 +36,20 @@ public class User extends Model {
 
     public boolean isAdmin = false;
 
-    @ManyToMany(cascade= CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_requestedApps", joinColumns = @JoinColumn(name = "email"),
             inverseJoinColumns = @JoinColumn(name = "id"))
     public List<App> requestedApps = new ArrayList<App>();
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_userApps", joinColumns = @JoinColumn(name = "email"),
             inverseJoinColumns = @JoinColumn(name = "id"))
     public List<App> userApps = new ArrayList<App>();
 
-    
+
     // -- Queries
-    
-    public static Finder<String,User> find = new Finder(String.class, User.class);
+
+    public static Finder<String, User> find = new Finder(String.class, User.class);
 
     public static Finder<Long, User> findById = new Finder(Long.class, User.class);
 
@@ -72,21 +72,21 @@ public class User extends Model {
      */
     public static User authenticate(String email, String password) {
         return find.where()
-            .eq("email", email)
-            .eq("password", password)
-            .findUnique();
+                .eq("email", email)
+                .eq("password", password)
+                .findUnique();
     }
 
-    public static void create(User user){
-         user.save();
+    public static void create(User user) {
+        user.save();
     }
 
-    public static void delete(Long id){
+    public static void delete(Long id) {
         findById.ref(id).delete();
     }
 
     @Transactional
-    public static void approveRequestedApp(String email, Long appId){
+    public static void approveRequestedApp(String email, Long appId) {
         User user = User.findByEmail(email);
         App requestedApp = App.find.ref(appId);
         user.requestedApps.remove(requestedApp);
@@ -98,9 +98,22 @@ public class User extends Model {
         }
 
     }
-    
+
+    @Transactional
+    public static boolean chargeUser(String email, long chargeValue) {
+        User user = User.findByEmail(email);
+        if (user.usedCredits >= chargeValue) {
+            user.usedCredits -= chargeValue;
+            user.save();
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // --
-    
+
     public String toString() {
         return "User(" + email + ")";
     }

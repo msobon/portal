@@ -28,6 +28,12 @@ users:
         password:   secret
         isAdmin:    true
 
+    - !!models.User
+           email:      portalUser@sample.com
+           name:       Portal User
+           password:   secret
+           isAdmin:    false
+
 # Apps
 apps:
 
