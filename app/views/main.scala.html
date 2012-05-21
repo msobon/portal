@@ -6,7 +6,7 @@
 <head>
     <title>Saas Portal</title>
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-    <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/myMain.css")">
     <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-1.7.1.js")"></script>
     <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-play-1.7.1.js")"></script>
     <script type="text/javascript" src="@routes.Assets.at("javascripts/underscore-min.js")"></script>
@@ -23,16 +23,25 @@
     </dl>
 </header>
 
-<section id ="menu">
-    <a href="@routes.MyApps.myApps" ><span>My Apps</span></a>
-    <a href="@routes.Apps.apps" ><span>Apps</span></a>
-    @if(user.isAdmin) {
-        <a href="@routes.Users.users" ><span>Users</span></a>
-    }
-    @if(user.isAdmin) {
-        <a href="@routes.Provisioning.provisioning" ><span>Provisioning</span></a>
-    }
-</section>
+<nav>
+    <section id ="menu">
+        <ul>
+            <a href="@routes.MyApps.myApps" ><span>My Apps</span></a>
+        </ul>
+        <ul>
+            <a href="@routes.Apps.apps" ><span>Apps</span></a>
+        </ul>
+        @if(user.isAdmin) {
+            <ul>
+                <a href="@routes.Users.users" ><span>Users</span></a>
+            </ul>
+            <ul>
+                <a href="@routes.Provisioning.provisioning" ><span>Provisioning</span></a>
+            </ul>
+        }
+
+    </section>
+</nav>
 
 <section id="main">
     @content
