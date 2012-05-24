@@ -39,10 +39,10 @@ apps:
 
     - !!models.App
         name:       Magazyn
-        uri:   www.example.com/magazyn
+        uri:   http://localhost:9002
 
     - !!models.App
             name:       Pracownicy
-            uri:   www.example.com/pracownicy
+            uri:    http://localhost:9001
 
 
