@@ -1,24 +1,21 @@
 package controllers;
 
 import models.User;
-import play.Logger;
-import play.libs.F;
-import play.libs.WS;
 import play.mvc.Controller;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.PostMethod;
 import play.mvc.Result;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 
 public class Accounting extends Controller {
 
     public static Result chargeUser(String email, Long chargeValue, String redirectUrl) {
         User user = User.findByEmail(email);
-        user.usedCredits -= chargeValue;
+        if(user.credits<chargeValue){
+            return ok("false");
+        }
+        user.credits -= chargeValue;
         user.save();
         System.out.println("charged: " + email + "" + chargeValue);
 

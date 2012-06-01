@@ -1,7 +1,6 @@
 package models;
 
 import com.avaje.ebean.Ebean;
-import controllers.routes;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -9,7 +8,6 @@ import play.db.jpa.Transactional;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,7 +30,7 @@ public class User extends Model {
     @Constraints.Required
     public String password;
 
-    public Long usedCredits = 0l;
+    public Long credits = 0l;
 
     public boolean isAdmin = false;
 
@@ -102,8 +100,8 @@ public class User extends Model {
     @Transactional
     public static boolean chargeUser(String email, long chargeValue) {
         User user = User.findByEmail(email);
-        if (user.usedCredits >= chargeValue) {
-            user.usedCredits -= chargeValue;
+        if (user.credits >= chargeValue) {
+            user.credits -= chargeValue;
             user.save();
 
             return true;

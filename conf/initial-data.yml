@@ -6,6 +6,7 @@ users:
         email:      guillaume@sample.com
         name:       Guillaume Bort
         password:   secret
+        credits:    100
 
     - !!models.User
         email:      maxime@sample.com
@@ -27,6 +28,7 @@ users:
         name:       Jack Admin
         password:   secret
         isAdmin:    true
+        credits:    100
 
     - !!models.User
            email:      portalUser@sample.com
