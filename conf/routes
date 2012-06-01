@@ -28,8 +28,7 @@ POST  /users/:idUser/:idApp/request             controllers.Users.requestApp(idU
 
 #Accounting
 GET  /accounting/:mail/:value/:redirect              controllers.Accounting.chargeUser(mail: String, value : Long, redirect: String)
-#GET  /accounting/:title           controllers.Accounting.feedTitle(title: String)
-#GET   /accounting/:title           controllers.Accounting.feedComments(title: String)
+
 # Provisioning
 GET /provisioning                  controllers.Provisioning.provisioning()
 GET /provisioning/:idUser/:idApp                  controllers.Provisioning.approveApp(idUser: String, idApp: Long)

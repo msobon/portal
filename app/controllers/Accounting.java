@@ -54,38 +54,5 @@ public class Accounting extends Controller {
         return ok("true");
     }
 
-    public static Result feedTitle(String feedUrl) {
-        Logger.info("feedTitle");
-        feedUrl = "http://localhost:9000/accounting/" + feedUrl;
-        return async(
-                WS.url(feedUrl).get().map(
-                        new F.Function<WS.Response, Result>() {
-                            public Result apply(WS.Response response) {
-                                return ok("Feed title:" + response.asJson().findPath("title"));
-                            }
-                        }
-                )
-        );
-    }
-
-    public static Result response(String msg) {
-        return ok(msg);
-//        return async(
-//                WS.url(feedUrl).get().flatMap(
-//                        new F.Function<WS.Response, F.Promise<Result>>() {
-//                            public F.Promise<Result> apply(WS.Response response) {
-//                                return WS.url(response.asJson().findPath("commentsUrl").get().map(
-//                                        new F.Function<WS.Response, Result>() {
-//                                            public Result apply(WS.Response response) {
-//                                                return ok("Number of comments: " + response.asJson().findPath("count"));
-//                                            }
-//                                        }
-//                                );
-//                            }
-//                        }
-//                )
-//        );
-    }
-
 
 }
