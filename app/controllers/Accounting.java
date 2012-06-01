@@ -16,11 +16,11 @@ import java.io.InputStreamReader;
 
 public class Accounting extends Controller {
 
-    public static Result chargeUser(String email, long chargeValue, String redirectUrl) {
+    public static Result chargeUser(String email, Long chargeValue, String redirectUrl) {
         User user = User.findByEmail(email);
         user.usedCredits -= chargeValue;
         user.save();
-        System.out.println("charged: "+email+chargeValue);
+        System.out.println("charged: " + email + "" + chargeValue);
 
 //        HttpClient client = new HttpClient();
 //        client.getParams().setParameter("http.useragent", "Test Client");
@@ -51,13 +51,12 @@ public class Accounting extends Controller {
 //            if(br != null) try { br.close(); } catch (Exception fe) {}
 //        }
 
-
         return ok("true");
     }
 
     public static Result feedTitle(String feedUrl) {
         Logger.info("feedTitle");
-        feedUrl="http://localhost:9000/accounting/"+feedUrl;
+        feedUrl = "http://localhost:9000/accounting/" + feedUrl;
         return async(
                 WS.url(feedUrl).get().map(
                         new F.Function<WS.Response, Result>() {

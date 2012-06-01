@@ -27,7 +27,7 @@ POST  /users/:id/delete             controllers.Users.deleteUser(id: Long)
 POST  /users/:idUser/:idApp/request             controllers.Users.requestApp(idUser: String, idApp: Long)
 
 #Accounting
-#GET  /accounting/:mail/:chargeValue/:redirect              controllers.Accounting.chargeUser(mail: String, chargeValue: Long, redirect: String)
+GET  /accounting/:mail/:value/:redirect              controllers.Accounting.chargeUser(mail: String, value : Long, redirect: String)
 #GET  /accounting/:title           controllers.Accounting.feedTitle(title: String)
 #GET   /accounting/:title           controllers.Accounting.feedComments(title: String)
 # Provisioning
