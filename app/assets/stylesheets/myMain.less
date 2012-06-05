@@ -30,7 +30,7 @@ a {
 
 
 form {
-    margin: auto 0;
+    margin: auto 5;
     width: 300px;
     padding: 20px;
     background: #fff;
@@ -57,9 +57,11 @@ form {
         margin-bottom: 10px;
         text-shadow: 1px 1px rgba(0,0,0,.1);
     }
+
     input {
-        display: block;
+        display: inline;
         width: inherit;
+        margin-bottom: 10px;
         padding: 2px;
         background: rgba(0,0,0,.05);
         border: 1px solid rgba(0,0,0,.15);
@@ -76,7 +78,24 @@ form {
         width: inherit;
         font-size: 14px;
     }
+
+
 }
+
+.buttons{
+        form{
+         width: 0px;
+         padding: 0px;
+         box-shadow: 0px 0px 0px #182019;
+         display: inline;
+         background: @mainBackground;
+        }
+
+        input {
+            width: 70px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+    }
 
 nav {
     margin-top: -5px;
