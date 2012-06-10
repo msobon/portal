@@ -24,9 +24,8 @@
 </ul>
 
 @if(user.isAdmin) {
-    <b>Add a new app</b>
-
     @form(routes.Apps.createApp()) {
+        <h1>Add a new app</h1>
         @inputText(appForm("name"))
         @inputText(appForm("uri"))
         <input type="submit" value="Create">

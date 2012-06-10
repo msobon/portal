@@ -4,6 +4,10 @@
 
 @main("My applications", user) {
 
+@if(myApps.size()==0) {
+ <h1>You don't have any applications</h1>
+}
+
 <ul>
     @for(app <- myApps) {
     <li>
