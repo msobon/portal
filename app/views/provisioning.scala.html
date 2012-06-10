@@ -4,21 +4,22 @@
 
 @main("Provisioning", user) {
 
+<h1>Requests</h1>
 <ul>
   @for(user <- users) {
     @if(user.requestedApps.size()>0) {
         <li>
-            @user.name @user.email <br>
-            @user.requestedApps.size()
+             <br>
             @for(app <- user.requestedApps) {
 
                 <li>
-                    @app.name
+                    @app.name - @user.name @user.email
                 </li>
-
-                @form(routes.Provisioning.approveApp(user.email, app.id)) {
-                    <input type="submit" value="Approve">
-                }
+                <div class="buttons">
+                    @form(routes.Provisioning.approveApp(user.email, app.id)) {
+                        <input type="submit" value="Approve">
+                    }
+                </div>
             }
         </li>
     }

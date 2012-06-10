@@ -4,27 +4,30 @@
 
 @main("User details", performer) {
 
-@user.name<br>
-@user.email<br>
-Used credits @user.credits<br>
-user apps @user.userApps.size()<br>
-<ul>
-    @for(app <- user.userApps) {
-    <li>
-        @app.name <br>
+<h1>User details - @user.name</h1>
+
+Email: @user.email<br>
+Credits: @user.credits<br>
+Applications count: @user.userApps.size()<br>
+@if(user.userApps.size>0){
+Applications:
+    <ul>
+        @for(app <- user.userApps) {
+        <li>
+            @app.name
+        </li>
         }
-    </li>
-
-</ul>
-
-requested apps @user.requestedApps.size()
-<ul>
-    @for(app <- user.requestedApps) {
-    <li>
-        @app.name <br>
-        }
-    </li>
-
-</ul>
-
+    </ul>
+}
+Requested applications count: @user.requestedApps.size()<br>
+@if(user.requestedApps.size>0){
+    Requested applications:
+    <ul>
+        @for(app <- user.requestedApps) {
+        <li>
+            @app.name <br>
+            }
+        </li>
+    </ul>
+}
 }
