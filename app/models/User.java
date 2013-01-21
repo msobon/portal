@@ -8,6 +8,7 @@ import play.db.jpa.Transactional;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -29,6 +30,8 @@ public class User extends Model {
 
     @Constraints.Required
     public String password;
+
+    public String ssoToken;
 
     public Long credits = 0l;
 
@@ -65,14 +68,28 @@ public class User extends Model {
         return find.where().eq("email", email).findUnique();
     }
 
+    public static boolean validateToken(String email, String token) {
+        if("".equals(token)) return false;
+        return find.where().eq("email", email).eq("ssoToken", token).findUnique() != null;
+    }
+
     /**
      * Authenticate a User.
      */
-    public static User authenticate(String email, String password) {
-        return find.where()
+    public static String authenticate(String email, String password) {
+        User user = find.where()
                 .eq("email", email)
                 .eq("password", password)
                 .findUnique();
+
+        if (user == null) return null;
+        else {
+            Calendar calendar = Calendar.getInstance();
+            user.ssoToken = "" + calendar.getTimeInMillis() + calendar.hashCode();
+            user.save();
+
+            return user.ssoToken;
+        }
     }
 
     public static void create(User user) {

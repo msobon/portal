@@ -5,6 +5,11 @@
 # Home page
 GET   /                             controllers.Application.login()
 
+#SSO
+GET /sso/validate/:id/:token              controllers.SsoController.validate(id: String, token : String)
+GET /sso/logout/:id              controllers.SsoController.logout(id: String)
+GET /sso/:id/:pass                        controllers.SsoController.authenticate(id : String, pass : String)
+
 # Authentication
 GET     /login                              controllers.Application.login()
 POST    /login                              controllers.Application.authenticate()
