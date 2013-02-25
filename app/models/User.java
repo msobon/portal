@@ -68,6 +68,10 @@ public class User extends Model {
         return find.where().eq("email", email).findUnique();
     }
 
+    public static User findByToken(String token) {
+        return find.where().eq("ssoToken", token).findUnique();
+    }
+
     public static boolean validateToken(String email, String token) {
         if("".equals(token)) return false;
         return find.where().eq("email", email).eq("ssoToken", token).findUnique() != null;
@@ -82,7 +86,7 @@ public class User extends Model {
                 .eq("password", password)
                 .findUnique();
 
-        if (user == null) return null;
+        if (user == null) return "";
         else {
             Calendar calendar = Calendar.getInstance();
             user.ssoToken = "" + calendar.getTimeInMillis() + calendar.hashCode();

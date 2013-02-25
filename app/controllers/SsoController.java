@@ -15,15 +15,16 @@ import play.mvc.Result;
 public class SsoController extends Controller {
     public static Result authenticate(String email, String password) {
         Logger.debug("Authenticating: " + email);
-
-        return ok(User.authenticate(email, password));
+        String authResult= User.authenticate(email, password);
+        response().setCookie("ssoToken",authResult);
+        return ok(authResult);
     }
 
     public static Result validate(String email, String token) {
         Logger.debug("Validating token: " + token);
 
         String result = User.validateToken(email, token) ? "ok" : "err";
-        Logger.debug("Validatiion: " + result);
+        Logger.debug("Validation: " + result);
         return ok(result);
     }
 
@@ -34,6 +35,7 @@ public class SsoController extends Controller {
         user.ssoToken="";
         user.save();
 
+        response().discardCookies("ssoToken");
         return ok("ok");
     }
 

@@ -20,7 +20,7 @@ public class Application extends Controller {
         public String password;
 
         public String validate() {
-            if (User.authenticate(email, password) == null) {
+            if (User.authenticate(email, password) == "") {
                 return "Invalid user or password";
             }
             return null;
@@ -45,6 +45,7 @@ public class Application extends Controller {
         if (loginForm.hasErrors()) {
             return badRequest(login.render(loginForm));
         } else {
+            response().setCookie("ssoToken",User.findByEmail(loginForm.get().email).ssoToken);         //TODO token regeneration
             session("email", loginForm.get().email);
             return redirect(
                     routes.MyApps.myApps()
@@ -59,6 +60,7 @@ public class Application extends Controller {
     public static Result logout() {
         session().clear();
         flash("success", "You've been logged out");
+        response().discardCookies("ssoToken");
         return redirect(
                 routes.Application.login()
         );
