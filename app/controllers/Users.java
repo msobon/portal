@@ -1,12 +1,13 @@
 package controllers;
 
 
-import models.App;
-import models.User;
-import play.api.Logger;
-import play.data.Form;
+import play.*;
 import play.mvc.*;
+import play.data.*;
+import static play.data.Form.*;
 
+import models.*;
+import views.html.*;
 
 @Security.Authenticated(Secured.class)
 public class Users extends Controller {
@@ -18,7 +19,7 @@ public class Users extends Controller {
         User performer = User.findByEmail(Http.Context.current().request().username());
         if (performer.isAdmin)
             return ok(
-                    views.html.users.render(User.all(), userForm, performer)
+                    users.render(User.all(), userForm, performer)
             );
         else
             return Results.forbidden();
@@ -28,7 +29,7 @@ public class Users extends Controller {
         User performer = User.findByEmail(Http.Context.current().request().username());
         if (performer.isAdmin) {
             User user = User.findByEmail(email);
-            return ok(views.html.userDetails.render(performer, user));
+            return ok(userDetails.render(performer, user));
         } else return Results.forbidden();
     }
 
@@ -61,7 +62,7 @@ public class Users extends Controller {
         Form<User> filledForm = userForm.bindFromRequest();
         if (filledForm.hasErrors()) {
             return badRequest(
-                    views.html.users.render(User.all(), filledForm, User.findByEmail(Http.Context.current().request().username()))
+                    users.render(User.all(), filledForm, User.findByEmail(Http.Context.current().request().username()))
             );
         } else {
             User.create(filledForm.get());

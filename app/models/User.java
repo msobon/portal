@@ -4,7 +4,7 @@ import com.avaje.ebean.Ebean;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
-import play.db.jpa.Transactional;
+import play.db.ebean.Transactional;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -80,20 +80,27 @@ public class User extends Model {
     /**
      * Authenticate a User.
      */
-    public static String authenticate(String email, String password) {
-        User user = find.where()
+//    public static String authenticate(String email, String password) {
+//        User user = find.where()
+//                .eq("email", email)
+//                .eq("password", password)
+//                .findUnique();
+//
+//        if (user == null) return "";
+//        else {
+//            Calendar calendar = Calendar.getInstance();
+//            user.ssoToken = "" + calendar.getTimeInMillis() + calendar.hashCode();
+//            user.save();
+//
+//            return user.ssoToken;
+//        }
+//    }
+
+    public static User authenticate(String email, String password) {
+        return find.where()
                 .eq("email", email)
                 .eq("password", password)
                 .findUnique();
-
-        if (user == null) return "";
-        else {
-            Calendar calendar = Calendar.getInstance();
-            user.ssoToken = "" + calendar.getTimeInMillis() + calendar.hashCode();
-            user.save();
-
-            return user.ssoToken;
-        }
     }
 
     public static void create(User user) {

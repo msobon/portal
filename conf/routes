@@ -6,7 +6,7 @@
 GET   /                             controllers.Application.login()
 
 #SSO
-GET /sso/validate/:id/:token              controllers.SsoController.validate(id: String, token : String)
+GET /sso/validate/:token              controllers.SsoController.validate(token : String)
 GET /sso/logout/:id              controllers.SsoController.logout(id: String)
 GET /sso/:id/:pass                        controllers.SsoController.authenticate(id : String, pass : String)
 
@@ -32,7 +32,7 @@ POST  /users/:id/delete             controllers.Users.deleteUser(id: Long)
 POST  /users/:idUser/:idApp/request             controllers.Users.requestApp(idUser: String, idApp: Long)
 
 #Accounting
-GET  /accounting/:mail/:value              controllers.Accounting.chargeUser(mail: String, value : Long)
+GET  /accounting/:mail/:token/:value              controllers.Accounting.chargeUser(mail: String, token: String, value : Long)
 
 # Provisioning
 GET /provisioning                  controllers.Provisioning.provisioning()

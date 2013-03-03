@@ -1,11 +1,9 @@
 @(myApps: List[App],  user: User)
 
-@import helper._
-
 @main("My applications", user) {
 
 <h1>My applications</h1>
-@if(myApps.size()==0) {
+@if(myApps.size==0) {
  <h2>You don't have any applications</h2>
 }
 

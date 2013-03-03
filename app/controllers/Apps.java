@@ -1,10 +1,12 @@
 package controllers;
 
-import models.App;
-import models.User;
-import play.data.Form;
+import play.*;
 import play.mvc.*;
+import play.data.*;
+import static play.data.Form.*;
 
+import models.*;
+import views.html.*;
 
 @Security.Authenticated(Secured.class)
 public class Apps extends Controller {
@@ -13,7 +15,7 @@ public class Apps extends Controller {
 
     public static Result apps() {
         return ok(
-                views.html.apps.render(App.all(), appForm, User.findByEmail(Http.Context.current().request().username()))
+                apps.render(App.all(), appForm, User.findByEmail(Http.Context.current().request().username()))
         );
     }
 
@@ -32,7 +34,7 @@ public class Apps extends Controller {
             Form<App> filledForm = appForm.bindFromRequest();
             if (filledForm.hasErrors()) {
                 return badRequest(
-                        views.html.apps.render(App.all(), filledForm, User.findByEmail(Http.Context.current().request().username()))
+                        apps.render(App.all(), filledForm, User.findByEmail(Http.Context.current().request().username()))
                 );
             } else {
                 App.create(filledForm.get());

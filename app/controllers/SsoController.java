@@ -15,24 +15,29 @@ import play.mvc.Result;
 public class SsoController extends Controller {
     public static Result authenticate(String email, String password) {
         Logger.debug("Authenticating: " + email);
-        String authResult= User.authenticate(email, password);
-        response().setCookie("ssoToken",authResult);
+        String authResult = User.authenticate(email, password).ssoToken;
+        response().setCookie("ssoToken", authResult);
         return ok(authResult);
     }
 
-    public static Result validate(String email, String token) {
+    public static Result validate(String token) {
         Logger.debug("Validating token: " + token);
 
-        String result = User.validateToken(email, token) ? "ok" : "err";
-        Logger.debug("Validation: " + result);
-        return ok(result);
+        User user = User.findByToken(token);
+        if (user == null) {
+            Logger.debug("Validation failed for token: " + token);
+            return ok("err");
+        } else {
+            Logger.debug("Validated user: " + user.email);
+            return ok(user.email);
+        }
     }
 
     public static Result logout(String email) {
         Logger.debug("logout: " + email);
 
         User user = User.findByEmail(email);
-        user.ssoToken="";
+        user.ssoToken = "";
         user.save();
 
         response().discardCookies("ssoToken");
