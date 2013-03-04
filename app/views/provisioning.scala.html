@@ -14,7 +14,7 @@
                     @app.name - @user.name @user.email
                 </li>
                 <div class="buttons">
-                    @form(routes.Provisioning.approveApp(user.email, app.id)) {
+                    form(routes.Provisioning.approveApp(user.email, app.id)) {
                         <input type="submit" value="Approve">
                     }
                 </div>

@@ -46,7 +46,9 @@ public class Application extends Controller {
             Logger.debug("invalid login " + loginForm.globalError().toString());
             return badRequest(login.render(loginForm));
         } else {
-            //response().setCookie("ssoToken", User.findByEmail(loginForm.get().email).ssoToken);         //TODO token regeneration
+            User user = User.findByEmail(loginForm.get().email);
+            user.generateSSOToken();
+            response().setCookie("ssoToken", user.ssoToken);         //TODO token regeneration
             session("email", loginForm.get().email);
             return redirect(routes.MyApps.myApps());
 

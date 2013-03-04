@@ -95,6 +95,11 @@ public class User extends Model {
 //            return user.ssoToken;
 //        }
 //    }
+    public  void generateSSOToken(){
+        Calendar calendar = Calendar.getInstance();
+            ssoToken = "" + calendar.getTimeInMillis() + calendar.hashCode();
+            save();
+    }
 
     public static User authenticate(String email, String password) {
         return find.where()
