@@ -47,7 +47,7 @@ public class Application extends Controller {
     /**
      * Handle login form submission.
      */
-    public static Result authenticate(String redirectUrl) {
+    public static Result authenticate() {
         Form<Login> loginForm = form(Login.class).bindFromRequest();
 
         if (loginForm.hasErrors()) {
@@ -59,19 +59,18 @@ public class Application extends Controller {
             response().setCookie("ssoToken", user.ssoToken);
             session("email", loginForm.get().email);
 
-            if ("".equals(redirectUrl)) {
+            Http.Cookie redirectUrlCookie = request().cookie("redirectUrl");
+            if (redirectUrlCookie == null) {
                 return redirect(routes.MyApps.myApps());
             } else {
+                String url = redirectUrlCookie.value();
+                response().discardCookie("redirectUrl");  //TODO dodac kontrole redirectow
+                Logger.debug("redirecting to:" + url);
 
-
-                return redirect(redirectUrl);
+                return redirect(url);
             }
 
         }
-    }
-
-    public static Result authenticate() {
-        return authenticate("");
     }
 
     /**
@@ -81,9 +80,9 @@ public class Application extends Controller {
         session().clear();
         flash("success", "You've been logged out");
         response().discardCookies("ssoToken");
-        return redirect(
-                routes.Application.login()
-        );
+        //todo inavlidate token w autjh providerze
+
+        return redirect(routes.Application.login());
     }
 
     public static Result register() {
