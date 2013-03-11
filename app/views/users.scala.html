@@ -1,5 +1,5 @@
 @(users: List[User], userForm: Form[User], user: User)
-
+@import helper._
 @main("Users", user) {
 
 <h1>Users</h1>
@@ -9,7 +9,7 @@
         <a href="/user/@user.email">@user.name</a>
 
         <div class="buttons">
-            form(routes.Users.deleteUser(user.id)) {
+            @form(routes.Users.deleteUser(user.id)) {
                 <input type="submit" value="Delete">
             }
         </div>
@@ -19,12 +19,12 @@
 
 
 
-form(routes.Users.createUser()) {
+@form(routes.Users.createUser()) {
     <h1>Add a new user</h1>
 
-    inputText(userForm("name"))
-    inputText(userForm("email"))
-    inputText(userForm("password"))
+    @inputText(userForm("name"))
+    @inputText(userForm("email"))
+    @inputText(userForm("password"))
 
     <input type="submit" value="Create">
 }

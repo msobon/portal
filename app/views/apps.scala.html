@@ -1,5 +1,5 @@
 @(apps: List[App], appForm: Form[App], user: User)
-
+@import helper._
 @main("Applications", user) {
 
 <h1> Applications</h1>
@@ -9,11 +9,11 @@
         <b>Name:</b> @app.name <br>
         <b>URL:</b> @app.uri
         <div class="buttons">
-            form(routes.Users.requestApp(user.email,app.id)){
+            @form(routes.Users.requestApp(user.email,app.id)){
                 <input type="submit" value="Request" >
             }
 
-        form(routes.Apps.deleteApp(app.id)) {
+        @form(routes.Apps.deleteApp(app.id)) {
             <input type="submit" value="Delete">
         }
         </div>
@@ -23,10 +23,10 @@
 </ul>
 
 @if(user.isAdmin) {
-    form(routes.Apps.createApp()) {
+    @form(routes.Apps.createApp()) {
         <h1>Add a new app</h1>
-        inputText(appForm("name"))
-        inputText(appForm("uri"))
+        @inputText(appForm("name"))
+        @inputText(appForm("uri"))
         <input type="submit" value="Create">
     }
 
