@@ -22,7 +22,7 @@ public class Application extends Controller {
         public String password;
 
         public String validate() {
-            if(User.authenticate(email, password) == null) {
+            if (User.authenticate(email, password) == null) {
                 return "Invalid user or password";
             }
             return null;
@@ -33,13 +33,21 @@ public class Application extends Controller {
      * Login page.
      */
     public static Result login() {
+        if (request().cookies().get("ssoToken") != null) {
+            String ssoToken = request().cookies().get("ssoToken").value();
+            User u = User.findByToken(ssoToken);
+            if (u != null) {
+                session("email", u.email);
+                return redirect(routes.MyApps.myApps());
+            }
+        }
         return ok(login.render(form(Login.class)));
     }
 
     /**
      * Handle login form submission.
      */
-    public static Result authenticate() {
+    public static Result authenticate(String redirectUrl) {
         Form<Login> loginForm = form(Login.class).bindFromRequest();
 
         if (loginForm.hasErrors()) {
@@ -48,11 +56,22 @@ public class Application extends Controller {
         } else {
             User user = User.findByEmail(loginForm.get().email);
             user.generateSSOToken();
-            response().setCookie("ssoToken", user.ssoToken);         //TODO token regeneration
+            response().setCookie("ssoToken", user.ssoToken);
             session("email", loginForm.get().email);
-            return redirect(routes.MyApps.myApps());
+
+            if ("".equals(redirectUrl)) {
+                return redirect(routes.MyApps.myApps());
+            } else {
+
+
+                return redirect(redirectUrl);
+            }
 
         }
+    }
+
+    public static Result authenticate() {
+        return authenticate("");
     }
 
     /**
