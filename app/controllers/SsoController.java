@@ -41,7 +41,7 @@ public class SsoController extends Controller {
         user.save();
 
         response().discardCookies("ssoToken");
-        return ok("ok");
+        return ok("logout: "+email);
     }
 
 }

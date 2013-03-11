@@ -4,6 +4,7 @@ package controllers;
 import play.*;
 import play.mvc.*;
 import play.data.*;
+
 import static play.data.Form.*;
 
 import models.*;
@@ -12,17 +13,15 @@ import views.html.*;
 @Security.Authenticated(Secured.class)
 public class Users extends Controller {
 
-
     static Form<User> userForm = form(User.class);
 
     public static Result users() {
         User performer = User.findByEmail(Http.Context.current().request().username());
         if (performer.isAdmin)
-            return ok(
-                    users.render(User.all(), userForm, performer)
-            );
-        else
+            return ok(users.render(User.all(), userForm, performer));
+        else {
             return Results.forbidden();
+        }
     }
 
     public static Result userDetails(String email) {
@@ -30,7 +29,9 @@ public class Users extends Controller {
         if (performer.isAdmin) {
             User user = User.findByEmail(email);
             return ok(userDetails.render(performer, user));
-        } else return Results.forbidden();
+        } else {
+            return Results.forbidden();
+        }
     }
 
     public static Result requestApp(String userId, Long appId) {
@@ -40,8 +41,7 @@ public class Users extends Controller {
             user.requestedApps.add(requestedApp);
             //TODO refactor to model
             user.saveManyToManyAssociations("requestedApps");
-            //TODO add logger
-            System.out.println("request added");
+            Logger.debug("User: "+userId+" has requested: "+requestedApp.name);
         }
         user.save();
         return redirect(routes.Apps.apps());
@@ -55,8 +55,6 @@ public class Users extends Controller {
         } else
             return Results.forbidden();
     }
-
-
 
     public static Result createUser() {
         Form<User> filledForm = userForm.bindFromRequest();

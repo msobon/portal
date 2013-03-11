@@ -77,10 +77,15 @@ public class Application extends Controller {
      * Logout and clean the session.
      */
     public static Result logout() {
+        Logger.debug("logout: " + session("email"));
+
+        User user = User.findByEmail(session("email"));
+        user.ssoToken = "";
+        user.save();
+
         session().clear();
         flash("success", "You've been logged out");
         response().discardCookies("ssoToken");
-        //todo inavlidate token w autjh providerze
 
         return redirect(routes.Application.login());
     }
@@ -89,11 +94,10 @@ public class Application extends Controller {
         //TODO validation
         Form<User> filledForm = userForm.bindFromRequest();
         if (filledForm.hasErrors()) {
-            return badRequest(
-                    register.render(filledForm)
-            );
+            return badRequest(register.render(filledForm));
         } else {
             User.create(filledForm.get());
+
             return redirect(routes.Application.login());
         }
     }
